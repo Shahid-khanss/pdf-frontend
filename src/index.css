@@ -31,7 +31,7 @@
  }
 
  .input-label{
-  background-color: aquamarine;
+  background-color: bisque;
   height: 50px;
   width: 200px;
   text-align: center;
@@ -46,7 +46,7 @@
  }
 
  .file-item{
-  background-color: bisque;
+  background-color: aquamarine;
   height: 50px;
   width: 500px;
   padding: 5px;
@@ -57,4 +57,9 @@
   align-items: center;
   justify-content: center;
   margin: 0px auto 20px auto;
+ }
+
+ .pdf-doc{
+  height: 100%;
+  width: 100%;
  }

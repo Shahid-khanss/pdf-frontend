@@ -17,28 +17,40 @@ async function handleChange(e){
 }
  
 // call createpdf if there is a file list
-if(fileList){
-    // console.log(file)
-    createPdf()
-}
+React.useEffect(()=>{
+    if(fileList){
+        // console.log(file)
+        createPdf()
+    }
+},[fileList]) // render (call filelist whenever fileList state changes)
+
 
 // console.log(pdfDocState)
 
 async function createPdf() {
-    console.log("createpdfcalled")
-    // const pdfDoc = await PDFDocument.create();
-    // const page = pdfDoc.addPage([350, 400]);
-    // page.moveTo(110, 200);
-    // page.drawText('Hello World!');
-  
-        const fr = new FileReader()
-        console.log("inside if")
-        fr.readAsDataURL(fileList[0])
-        fr.onloadend = async ()=>{
-        const pdfDoc = await PDFDocument.load(fr.result)
-        const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-        console.log(pdfDataUri)
-        setPdfDocState(pdfDataUri)}
+    // console.log("createpdfcalled")
+    // console.log("inside if")
+    
+    const mergedDoc = await PDFDocument.create() // create pdfdocument instance as mergedDoc
+    
+    for(let i=0;i<fileList.length;i++){ // loop through the list of files that are uploaded from fileList state.
+            const fr = new FileReader() // file reader instance
+            console.log("inside loop")
+            fr.readAsDataURL(fileList[i]) // read as base64url
+            fr.onloadend = async ()=>{     // on load end this function will fire async
+            const srcDoc = await PDFDocument.load(fr.result) // load pdf document in pdf-lib object as srcDoc
+            const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
+            copyDoc.forEach(page=>{ // if srcDoc has more than one pages, loop though them
+                mergedDoc.addPage(page) // add pages one by one to our mergedDoc
+            })
+           
+            if(i===fileList.length-1){ // on last iteration save mergedDoc as base64url in pdfDatauri and then set state of latest pdfDocState
+                const pdfDataUri = await mergedDoc.saveAsBase64({ dataUri: true });
+                console.log(pdfDataUri)
+                setPdfDocState(pdfDataUri)
+            }
+        }
+    }
       
 }
 

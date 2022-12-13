@@ -77,7 +77,7 @@ async function createPdf() {
 function handleDelete(e,index){
     setFileList(prev=>{
         prev.splice(index,1)
-        // console.log(prev)
+        console.log("delete")
         return [...prev]
     })
 }

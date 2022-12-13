@@ -46,7 +46,7 @@ async function createPdf() {
             return result;
         }
 
-            const result = await readFile(fileList[i])  
+            const result = await readFile(fileList[i]) // calling readFile (to work as syncronous)  
             const srcDoc = await PDFDocument.load(result) // load pdf document in pdf-lib object as srcDoc
             const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
             
@@ -67,13 +67,15 @@ async function createPdf() {
                 // console.log(pdfDataUri)
                 setPdfDocState(blobUrl)
             }
-        // }
+        
     }
       
 }
 
     return ( 
         <div className="app-container">
+                <div className="input-container">
+                <label className='input-label' htmlFor="input">Upload PDFs</label>
                 <div className="input">
                         <input 
                         id='input' 
@@ -81,7 +83,7 @@ async function createPdf() {
                         multiple style={{"display" : "none"}}
                         onChange={handleChange}
                         />
-                        <label className='input-label' htmlFor="input">Upload PDFs</label>
+                       
                         
                         {/* iterating array of files */}
                         <div className="file-list"> 
@@ -90,7 +92,7 @@ async function createPdf() {
                         ))}
                 </div>
                 
-                
+                </div>
                 </div>
                 
                 <div onClick={createPdf} className="output">{pdfDocState ? <iframe className='pdf-doc' src={pdfDocState} ></iframe> : "Output File"}</div>

@@ -102,7 +102,7 @@ return (
                            <div key={list.name} className='file-item'>
                             <p className="file-name">{list.name}</p>
                             <p className='page-no'>{index+1}</p>
-                            <p onClick={(e)=>handleDelete(e,index)} className='file-delete'>X</p>
+                            <p onClick={(e)=>handleDelete(e,index)} className='file-delete'><span class="material-symbols-outlined">delete</span></p>
                            </div> 
                         ))}
                 </div>

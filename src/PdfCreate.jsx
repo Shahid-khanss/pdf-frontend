@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PDFDocument } from 'pdf-lib'
 
 
@@ -72,7 +72,16 @@ async function createPdf() {
       
 }
 
-    return ( 
+function handleDelete(e,index){
+    setFileList(prev=>{
+        prev.splice(index,1)
+        // console.log(prev)
+        return prev
+    })
+}
+
+
+return ( 
         <div className="app-container">
                 <div className="input-container">
                 <label className='input-label' htmlFor="input">Upload PDFs</label>
@@ -88,7 +97,11 @@ async function createPdf() {
                         {/* iterating array of files */}
                         <div className="file-list"> 
                         {fileList && fileList.map((list, index)=>(
-                            <h1 className='file-item' key={index}>{list.name}</h1>
+                           <div className='file-item'>
+                            <p key={index} className="file-name">{list.name}</p>
+                            <p className='page-no'>{index+1}</p>
+                            <p onClick={(e)=>handleDelete(e,index)} className='file-delete'>X</p>
+                           </div> 
                         ))}
                 </div>
                 

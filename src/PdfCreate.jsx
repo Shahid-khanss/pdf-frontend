@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { PDFDocument } from 'pdf-lib'
-
+import pdfImage from './PDF-Placeholder.png'
 
 
 
@@ -110,7 +110,9 @@ return (
                 </div>
                 </div>
                 
-                <div onClick={createPdf} className="output">{pdfDocState ? <iframe className='pdf-doc' src={pdfDocState} ></iframe> : "Output File"}</div>
+                <div onClick={createPdf} className="output">
+                    {pdfDocState ? <iframe className='pdf-doc' src={pdfDocState} ></iframe> : <img src={pdfImage} alt="image" /> }
+                </div>
         </div>
      );
 }

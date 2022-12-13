@@ -86,7 +86,8 @@ function handleDelete(e,index){
 return ( 
         <div className="app-container">
                 <div className="input-container">
-                <label className='input-label' htmlFor="input">Upload PDFs</label>
+                    {/* below input-label-placeholder is just a hidden placeholder so as to position input-placeholder (at line 108) correctly */}
+                {fileList ? <label className='input-label' htmlFor="input">Add PDFs</label> : <div className='input-label-placeholder'></div> } 
                 <div className="input">
                         <input 
                         id='input' 
@@ -98,13 +99,13 @@ return (
                         
                         {/* iterating array of files */}
                         <div className="file-list"> 
-                        {fileList && fileList.map((list, index)=>(
+                        {fileList ? fileList.map((list, index)=>(
                            <div key={list.name} className='file-item'>
                             <p className="file-name">{list.name}</p>
                             <p className='page-no'>{index+1}</p>
                             <p onClick={(e)=>handleDelete(e,index)} className='file-delete'><span class="material-symbols-outlined">delete</span></p>
                            </div> 
-                        ))}
+                        )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs</div></label>}
                 </div>
                 
                 </div>

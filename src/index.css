@@ -22,6 +22,7 @@ body{
   margin: 50px auto;
   justify-content: space-around;
   padding: 20px;
+  align-items: center;
 }
 
 .input{
@@ -68,6 +69,11 @@ body{
   justify-content: center;
   margin: 10px auto 20px auto;
   border-radius: 5px;
+ }
+
+ .input-label-placeholder{
+  height: 50px;
+  width: 200px;
  }
 
  .file-item{
@@ -129,3 +135,11 @@ mix blend mode filter
   mix-blend-mode: multiply; 
  }
 
+.input-placeholder{
+  font-size: 5rem;
+  color: #524738;
+  width: 100%;
+  text-align: center;
+  margin-top: 30%;
+  
+}

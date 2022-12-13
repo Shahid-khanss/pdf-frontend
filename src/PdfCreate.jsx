@@ -36,12 +36,22 @@ async function createPdf() {
     const mergedDoc = await PDFDocument.create() // create pdfdocument instance as mergedDoc
     
     for(let i=0;i<fileList.length;i++){ // loop through the list of files that are uploaded from fileList state.
-            const fr = new FileReader() // file reader instance
-            console.log("inside loop")
-            fr.readAsArrayBuffer(fileList[i]) // read as base64url
-            fr.onloadend = async ()=>{     // on load end this function will fire async
-            const srcDoc = await PDFDocument.load(fr.result) // load pdf document in pdf-lib object as srcDoc
+            
+        async function readFile(file) { // making file reader work as syncrounous so that it will read PDFs one by as as per the list
+            const result = await new Promise((resolve) => {
+                const fr = new FileReader();
+                fr.onload = (e) => resolve(fr.result);
+                fr.readAsArrayBuffer(file);
+            });
+            return result;
+        }
+
+            const result = await readFile(fileList[i])  
+            const srcDoc = await PDFDocument.load(result) // load pdf document in pdf-lib object as srcDoc
             const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
+            
+            
+            
             copyDoc.forEach(page=>{ // if srcDoc has more than one pages, loop though them
                 mergedDoc.addPage(page) // add pages one by one to our mergedDoc
             })
@@ -57,7 +67,7 @@ async function createPdf() {
                 // console.log(pdfDataUri)
                 setPdfDocState(blobUrl)
             }
-        }
+        // }
     }
       
 }

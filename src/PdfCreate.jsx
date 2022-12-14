@@ -17,7 +17,7 @@ const item = React.useRef()
 const dragStartIndex = React.useRef()
 const dragEndIndex = React.useRef()
 
-// console.log(fileList)
+console.log(fileList)
 // console.log(pdfDocState)
 async function handleChange(e){
     const filesArray = Array.from(e.target.files) // getting array from file lists
@@ -54,16 +54,34 @@ async function createPdf() {
             return result;
         }
 
+
+if(fileList[i].type === "image/jpg" || fileList[i].type === "image/jpeg" || fileList[i].type === "image/png"){
+console.log("inside image")
+const result = await readFile(fileList[i])
+// Embed the JPG image bytes and PNG image bytes
+const jpgImage = await mergedDoc.embedJpg(result)
+const jpgDims = jpgImage.scale(0.7) // scale of image
+const page = mergedDoc.addPage()
+page.drawImage(jpgImage, {
+    x: page.getWidth() / 2 - jpgDims.width / 2,
+    y: page.getHeight() / 2 - jpgDims.height / 2,
+    width: jpgDims.width,
+    height: jpgDims.height,
+  })
+
+}
+            
+// if it is of type pdf
+else if(fileList[i].type === "application/pdf"){
+
             const result = await readFile(fileList[i]) // calling readFile (to work as syncronous)  
             const srcDoc = await PDFDocument.load(result) // load pdf document in pdf-lib object as srcDoc
             const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
             
-            
-            
             copyDoc.forEach(page=>{ // if srcDoc has more than one pages, loop though them
                 mergedDoc.addPage(page) // add pages one by one to our mergedDoc
             })
-           
+        }
             if(i===fileList.length-1){ // on last iteration save mergedDoc as base64url in pdfDatauri and then set state of latest pdfDocState
                 const pdfDataUri = await mergedDoc.save({ dataUri: true }); // data is saved as uint8array buffer.
                 /* 

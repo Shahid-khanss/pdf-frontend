@@ -35,6 +35,8 @@ body{
   overflow-y:auto;
   border-radius: 5px;
   padding: 10px;
+  
+  
   }
 
 .output{
@@ -71,6 +73,12 @@ body{
   border-radius: 5px;
  }
 
+.input-label:hover{
+  background-color: #bdcea2 ;
+  cursor: pointer;
+}
+
+/* empty placeholder */
  .input-label-placeholder{
   height: 50px;
   width: 200px;
@@ -140,6 +148,16 @@ mix blend mode filter
   color: #524738;
   width: 100%;
   text-align: center;
-  margin-top: 30%;
-  
+  margin-top: 10%;
+  cursor: pointer;
+  outline: 2px dashed black;
+  outline-offset: -.2em;
+  padding: 1.2em;
 }
+
+.input-placeholder:hover{
+  color:#31416e;
+}
+
+    
+    

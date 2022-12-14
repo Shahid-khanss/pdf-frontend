@@ -6,11 +6,19 @@ import pdfImage from './PDF-Placeholder.png'
 
 const PdfCreate = () => {
 
+
+// list and doc states
 const [fileList, setFileList] = React.useState() // files list state
 const [pdfDocState, setPdfDocState] = React.useState(null)
 
-console.log(fileList)
-console.log(pdfDocState)
+// drag state to handleDrag
+const [dragging, setDragging] = React.useState(false)
+const item = React.useRef()
+const dragStartIndex = React.useRef()
+const dragEndIndex = React.useRef()
+
+// console.log(fileList)
+// console.log(pdfDocState)
 async function handleChange(e){
     const filesArray = Array.from(e.target.files) // getting array from file lists
     setFileList(prev=>(
@@ -82,6 +90,35 @@ function handleDelete(e,index){
     })
 }
 
+// handle drag
+function handleDragStart(e,index){
+    console.log(`drag Start at ${index}`)
+    item.current = e.target
+    item.current.addEventListener('dragend', handleDragEnd)
+    dragStartIndex.current = index
+}
+
+function handleDragEnter(e,index){
+    console.log(`drag Enter at ${index}`)
+    dragEndIndex.current = index
+}
+
+function handleDragEnd(e){
+    
+if(dragStartIndex!==dragEndIndex){
+    // console.log(`dragEnd at ${dragEndIndex.current}`)
+    
+    setFileList(prev=>{        
+        prev[dragEndIndex.current] = prev.splice(dragStartIndex.current, 1, prev[dragEndIndex.current])[0] // swappin array elements
+        return  [...prev]
+    })
+
+    // dragStartIndex.current = null
+    // dragEndIndex.current = null
+}
+}
+
+
 
 return ( 
         <div className="app-container">
@@ -100,10 +137,16 @@ return (
                         {/* iterating array of files */}
                         <div className="file-list"> 
                         {fileList ? fileList.map((list, index)=>(
-                           <div key={list.name} className='file-item' draggable>
+                           <div 
+                           key={list.name} 
+                           className='file-item' 
+                           draggable
+                           onDragStart={(e)=>handleDragStart(e,index)}
+                           onDragEnter={(e)=>handleDragEnter(e,index)}
+                           >
                             <p className="file-name">{list.name}</p>
                             <p className='page-no'>{index+1}</p>
-                            <p onClick={(e)=>handleDelete(e,index)} className='file-delete'><span class="material-symbols-outlined">delete</span></p>
+                            <p onClick={(e)=>handleDelete(e,index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                            </div> 
                         )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs</div></label>}
                 </div>

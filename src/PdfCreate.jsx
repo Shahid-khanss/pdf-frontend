@@ -118,13 +118,24 @@ if(dragStartIndex!==dragEndIndex){
 }
 }
 
+// clear all button
+function handleClear(){
+    setFileList(null)
+    setPdfDocState(null)
+}
+
 
 
 return ( 
         <div className="app-container">
                 <div className="input-container">
                     {/* below input-label-placeholder is just a hidden placeholder so as to position input-placeholder (at line 108) correctly */}
-                {fileList ? <label className='input-label' htmlFor="input">Add PDFs</label> : <div className='input-label-placeholder'></div> } 
+                {fileList ? 
+                <div className='head-label'>
+                    <label className='input-label' htmlFor="input">Add PDFs</label>
+                    <div className="clear"><span class="material-symbols-outlined" onClick={handleClear}>restart_alt</span></div>
+                </div> : 
+                <div className='input-label-placeholder'></div> } 
                 <div className="input">
                         <input 
                         id='input' 

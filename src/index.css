@@ -160,4 +160,25 @@ mix blend mode filter
 }
 
     
-    
+.clear{
+  display:inline;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #fd9e8d;
+  cursor: pointer;
+  width: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear:hover{
+  background-color: #fd856f ;
+}
+
+.head-label{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

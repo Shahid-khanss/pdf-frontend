@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { PDFDocument } from 'pdf-lib'
+import { PageSizes, PDFDocument } from 'pdf-lib'
 import pdfImage from './PDF-Placeholder.png'
 
 
@@ -37,6 +37,38 @@ const PdfCreate = () => {
 
     // console.log(pdfDocState)
 
+/* 
+    How to work in PDF files. (pdf-lib)
+
+    1.  First create an empty pdf document instance by PDFDocument.create()
+    2.  Then we can use addPage() function to add:-
+        a. Blank page of desired size by addPage(a,b) (where a and b are dimensions of page in pixels)
+        b. Blank page of desired size by addPage(PageSizes.A4)
+        c. Add a copied page by addPage(copiedpage) (copied page is obtain by doc.copyPages())
+    3. After adding blank page, we can draw embed images or embed pdf pages on the blank page.
+    4. Embed pages / images means we have stored there pages / images in context of pdf document memory in a variable.
+    5. we can embed pdf by first loading (or reading) an array buffer or base64 data and then embed it.
+    6.  const [embeddedPage] = await pdfDoc.embedPdf(sourcePdf, [73]) (souch pdf is arrayBuffer or base64data, [73] is array of pages to be embed)
+
+    7. We can embed image as
+        const embeddedImage = await pdfDoc.embedjpg(arrayBuffer / base64 data)
+
+    8. After embedding we have the data (image or pdf) in memory in context of pdfdocument.
+    9. Now we can draw these in our blank page according to our need (position and size).
+    10. If we directly copy pages from other pdf docs we need not to create blank page or draw.
+
+    This is how to draw image by adding blank A4 page:-
+    
+    const jpgDims = jpgImage.scale(1) // scale of image (get image dimensions)
+    const page = mergedDoc.addPage(PageSizes.A4) // add blank page of A4 size
+    page.drawImage(jpgImage, {
+        x: 60, // position of image from left
+        y: 70, // position of image from below
+        width: 500, 
+        height: 700, // from below
+    })
+*/
+
     async function createPdf() {
         // console.log("createpdfcalled")
         // console.log("inside if")
@@ -60,13 +92,13 @@ const PdfCreate = () => {
                 const result = await readFile(fileList[i])
                 // Embed the JPG image bytes and PNG image bytes
                 const jpgImage = await mergedDoc.embedJpg(result)
-                const jpgDims = jpgImage.scale(0.7) // scale of image
-                const page = mergedDoc.addPage()
+                const jpgDims = jpgImage.scale(1) // scale of image (get image dimensions)
+                const page = mergedDoc.addPage(PageSizes.A4) // add page of A4 size
                 page.drawImage(jpgImage, {
-                    x: page.getWidth() / 2 - jpgDims.width / 2,
-                    y: page.getHeight() / 2 - jpgDims.height / 2,
-                    width: jpgDims.width,
-                    height: jpgDims.height,
+                    x: 60, // position of image from left
+                    y: 70, // position of image from below
+                    width: 500, 
+                    height: 700, // from below
                 })
 
             }

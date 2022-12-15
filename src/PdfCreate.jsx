@@ -88,7 +88,7 @@ const PdfCreate = () => {
 
 
             if (fileList[i].type === "image/jpg" || fileList[i].type === "image/jpeg" || fileList[i].type === "image/png") {
-                console.log("inside image")
+                // console.log("inside image")
                 const result = await readFile(fileList[i])
                 // Embed the JPG image bytes and PNG image bytes
                 const jpgImage = await mergedDoc.embedJpg(result)
@@ -100,16 +100,19 @@ const PdfCreate = () => {
                 */
                 if(jpgDims.width/jpgDims.height>1){ // if image width is greater than 500 add landscape
                     const page = mergedDoc.addPage([841.89, 595.28]) // add page of A4 in landscape 
+                    
                     page.drawImage(jpgImage, {
                         x: 70, // position of image from left
                         y: 60, // position of image from below
                         width: 700, 
                         height: 500, // from below
+                        
                     })
                 }
-                else{
+                else {
 
                     const page = mergedDoc.addPage(PageSizes.A4) // add page of A4 size
+                    console.log("inside potrait")
                     page.drawImage(jpgImage, {
                         x: 60, // position of image from left
                         y: 70, // position of image from below
@@ -130,6 +133,26 @@ const PdfCreate = () => {
                 const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
 
                 copyDoc.forEach(page => { // if srcDoc has more than one pages, loop though them
+                    const { width, height } = page.getSize() // get the page height and width
+                    
+                    /* 
+                        This function scale the PDF pages. page.scale(x,y), x and y are the factors for scale. if x=.5 then scaled width will be 50% of original.
+                        Here we have to make the size A4. So by maths equation 
+                        
+                        originalWidth * scale= 595.28 (A4 page width)
+                        => scale = 595.28/orignalWidth
+
+                    */
+                    if(width<height){ // if potrait
+
+                        page.scale(595.28/width,841.89/height) // scale the page to A4 in potrait
+                    }
+                    
+                    else{ // if landscape
+                        page.scale(841.89/width,595.28/height) // scale the page to A4 in landscape
+
+                    }
+                    
                     mergedDoc.addPage(page) // add pages one by one to our mergedDoc
                 })
             }

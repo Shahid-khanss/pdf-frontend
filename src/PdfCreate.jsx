@@ -93,13 +93,32 @@ const PdfCreate = () => {
                 // Embed the JPG image bytes and PNG image bytes
                 const jpgImage = await mergedDoc.embedJpg(result)
                 const jpgDims = jpgImage.scale(1) // scale of image (get image dimensions)
-                const page = mergedDoc.addPage(PageSizes.A4) // add page of A4 size
-                page.drawImage(jpgImage, {
-                    x: 60, // position of image from left
-                    y: 70, // position of image from below
-                    width: 500, 
-                    height: 700, // from below
-                })
+                
+                /* 
+                condition to check if the image is in landscape
+                if image is in landscape its width is greater than heignt.
+                */
+                if(jpgDims.width/jpgDims.height>1){ // if image width is greater than 500 add landscape
+                    const page = mergedDoc.addPage([841.89, 595.28]) // add page of A4 in landscape 
+                    page.drawImage(jpgImage, {
+                        x: 70, // position of image from left
+                        y: 60, // position of image from below
+                        width: 700, 
+                        height: 500, // from below
+                    })
+                }
+                else{
+
+                    const page = mergedDoc.addPage(PageSizes.A4) // add page of A4 size
+                    page.drawImage(jpgImage, {
+                        x: 60, // position of image from left
+                        y: 70, // position of image from below
+                        width: 500, 
+                        height: 700, // from below
+                    })
+                }
+                
+                
 
             }
 

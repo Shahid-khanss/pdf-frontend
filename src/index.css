@@ -127,8 +127,18 @@ body{
   align-items: center;
   justify-content: center;
   margin-left: 20px;
-
  }
+
+ .list-no{
+  width: 10px;
+  height: 30px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 10px;
+ }
+
  .pdf-doc{
   height: 100%;
   width: 100%;

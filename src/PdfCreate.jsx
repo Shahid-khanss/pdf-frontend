@@ -255,6 +255,7 @@ const PdfCreate = () => {
                                 onDragStart={(e) => handleDragStart(e, index)}
                                 onDragEnter={(e) => handleDragEnter(e, index)}
                             >
+                                <p className='list-no'>{index+1}.</p>
                                 <p className="file-name">{list.name}</p>
                                 <p className='page-no'>Pages-{list.pages}</p> {/**in case of multiple pages */}                          
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>

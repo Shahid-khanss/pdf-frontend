@@ -135,15 +135,11 @@ const PdfCreate = () => {
                 const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
 
                /* 
-                if copyDoc.length > 1 it implies file has multiple pages. So we add a property multipage as true otherwise false.
+                if copyDoc.length >= 1 it implies file has multiple pages. So we add a property pages as copyDoc.length otherwise false.
                */ 
-              if(copyDoc.length>1){
-                    fileList[i].multiPage = true
-              }
-
-              else{
-                fileList[i].multiPage = false
-              }
+              
+                fileList[i].pages = copyDoc.length
+                            
                 copyDoc.forEach(page => { // if srcDoc has more than one pages, loop though them
                     const { width, height } = page.getSize() // get the page height and width
                     
@@ -260,8 +256,7 @@ const PdfCreate = () => {
                                 onDragEnter={(e) => handleDragEnter(e, index)}
                             >
                                 <p className="file-name">{list.name}</p>
-                                <p className='page-no'>{index + 1}</p>
-                                <p className='multi-page'>{list.multiPage && "multipage"}</p> {/**if multipage is true */}
+                                <p className='page-no'>Pages-{list.pages}</p> {/**in case of multiple pages */}                          
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>
                         )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs/Images</div></label>}

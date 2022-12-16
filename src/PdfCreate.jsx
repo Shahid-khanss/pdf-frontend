@@ -11,6 +11,8 @@ const PdfCreate = () => {
     const [fileList, setFileList] = React.useState() // files list state
     const [pdfDocState, setPdfDocState] = React.useState(null)
 
+
+
     // drag state to handleDrag
     const [dragging, setDragging] = React.useState(false)
     const item = React.useRef()
@@ -132,6 +134,16 @@ const PdfCreate = () => {
                 const srcDoc = await PDFDocument.load(result) // load pdf document in pdf-lib object as srcDoc
                 const copyDoc = await mergedDoc.copyPages(srcDoc, srcDoc.getPageIndices()) // copyDoc will have pages from srcDoc
 
+               /* 
+                if copyDoc.length > 1 it implies file has multiple pages. So we add a property multipage as true otherwise false.
+               */ 
+              if(copyDoc.length>1){
+                    fileList[i].multiPage = true
+              }
+
+              else{
+                fileList[i].multiPage = false
+              }
                 copyDoc.forEach(page => { // if srcDoc has more than one pages, loop though them
                     const { width, height } = page.getSize() // get the page height and width
                     
@@ -249,6 +261,7 @@ const PdfCreate = () => {
                             >
                                 <p className="file-name">{list.name}</p>
                                 <p className='page-no'>{index + 1}</p>
+                                <p className='multi-page'>{list.multiPage && "multipage"}</p> {/**if multipage is true */}
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>
                         )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs/Images</div></label>}

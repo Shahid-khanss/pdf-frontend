@@ -291,8 +291,11 @@ const PdfCreate = () => {
                             >
                                 <p className='list-no'>{index+1}.</p>
                                 <p className="file-name">{list.name}</p>
-                                <p className='rotate-pdf' onClick={(e)=>handleRotatePdf(e,index)}>Rotate</p>
+                                {/* 
+                                    To rotate PDF
+                                */}
                                 <p className='page-no'>Pages-{list.pages}</p> {/**in case of multiple pages */}                          
+                                <p className='rotate-pdf' onClick={(e)=>handleRotatePdf(e,index)}><span class="material-symbols-outlined">rotate_90_degrees_ccw</span></p>
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>
                         )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs/Images</div></label>}

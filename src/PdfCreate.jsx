@@ -235,6 +235,10 @@ const PdfCreate = () => {
 
 /* 
     Handling rotation of PDF doc
+
+    We are getting index of listItem from click event. Then changing the value of list.rotation variable. If we change the value
+    the component will re-render and the value of rotation is updated. This updated value will checked by if check in pdfroate 
+    function above in line 171, with the value of updated rotation.
 */
     function handleRotatePdf(e,index){
         setFileList(prev=>{

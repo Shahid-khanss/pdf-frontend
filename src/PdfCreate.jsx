@@ -267,7 +267,7 @@ const PdfCreate = () => {
                 {fileList ?
                     <div className='head-label'>
                         <label className='input-label' htmlFor="input">Add PDFs</label>
-                        <div className="clear"><span class="material-symbols-outlined" onClick={handleClear}>restart_alt</span></div>
+                        <div className="clear"><span className="material-symbols-outlined" onClick={handleClear}>restart_alt</span></div>
                     </div> :
                     <div className='input-label-placeholder'></div>}
                 <div className="input">
@@ -295,7 +295,7 @@ const PdfCreate = () => {
                                     To rotate PDF
                                 */}
                                 <p className='page-no'>Pages-{list.pages}</p> {/**in case of multiple pages */}                          
-                                <p className='rotate-pdf' onClick={(e)=>handleRotatePdf(e,index)}><span class="material-symbols-outlined">rotate_90_degrees_ccw</span></p>
+                                <p className='rotate-pdf' onClick={(e)=>handleRotatePdf(e,index)}><span className="material-symbols-outlined">rotate_90_degrees_ccw</span></p>
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>
                         )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs/Images</div></label>}

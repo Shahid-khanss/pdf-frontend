@@ -115,6 +115,10 @@ const PdfCreate = () => {
                         height: 500, // from below
                         
                     })
+
+                    if(fileList[i].rotation!==0){
+                        page.setRotation(degrees(fileList[i].rotation))
+                    }
                 }
                 else {
 
@@ -126,6 +130,10 @@ const PdfCreate = () => {
                         width: 500, 
                         height: 700, // from below
                     })
+
+                    if(fileList[i].rotation!==0){
+                        page.setRotation(degrees(fileList[i].rotation))
+                    }
                 }
                 
                 

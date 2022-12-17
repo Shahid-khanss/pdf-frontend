@@ -230,9 +230,11 @@ const PdfCreate = () => {
                 return [...prev]
             })
 
-            // dragStartIndex.current = null
-            // dragEndIndex.current = null
         }
+        // below line is important
+        item.current.removeEventListener('dragend', handleDragEnd)
+        
+
     }
 
     // clear all button

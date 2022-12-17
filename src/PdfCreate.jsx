@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { PageSizes, PDFDocument } from 'pdf-lib'
+import { PageSizes, PDFDocument, degrees } from 'pdf-lib'
 import pdfImage from './PDF-Placeholder.png'
+
 
 
 
@@ -88,6 +89,10 @@ const PdfCreate = () => {
                 return result;
             }
 
+            if(!fileList[i].rotation){
+
+                fileList[i].rotation = 0 // add a variable rotation in file object
+            }
 
             if (fileList[i].type === "image/jpg" || fileList[i].type === "image/jpeg" || fileList[i].type === "image/png") {
                 // console.log("inside image")
@@ -161,6 +166,10 @@ const PdfCreate = () => {
 
                     }
                     
+                    
+                    if(fileList[i].rotation!==0){
+                        page.setRotation(degrees(fileList[i].rotation))
+                    }
                     mergedDoc.addPage(page) // add pages one by one to our mergedDoc
                 })
             }
@@ -224,6 +233,19 @@ const PdfCreate = () => {
         setPdfDocState(null)
     }
 
+/* 
+    Handling rotation of PDF doc
+*/
+    function handleRotatePdf(e,index){
+        setFileList(prev=>{
+            return prev.map((list,i)=>{
+                if(index===i)
+                {list.rotation=list.rotation-90
+                return list}
+                else{return list}
+            })
+        })
+    }
 
 
     return (
@@ -257,6 +279,7 @@ const PdfCreate = () => {
                             >
                                 <p className='list-no'>{index+1}.</p>
                                 <p className="file-name">{list.name}</p>
+                                <p className='rotate-pdf' onClick={(e)=>handleRotatePdf(e,index)}>Rotate</p>
                                 <p className='page-no'>Pages-{list.pages}</p> {/**in case of multiple pages */}                          
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>

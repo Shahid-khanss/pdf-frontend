@@ -322,7 +322,7 @@ function getDraggingStyle(index){
                 </div>
             </div>
 
-            <div onClick={createPdf} className="output">
+            <div className="output">
                 {pdfDocState ? <iframe className='pdf-doc' src={pdfDocState} ></iframe> : <img src={pdfImage} alt="image" />}
             </div>
         </div>

@@ -213,6 +213,9 @@ const PdfCreate = () => {
         item.current = e.target
         item.current.addEventListener('dragend', handleDragEnd)
         dragStartIndex.current = index
+        setTimeout(() => {
+            setDragging(true)
+        }, 0);
     }
 
     function handleDragEnter(e, index) {
@@ -233,7 +236,7 @@ const PdfCreate = () => {
         }
         // below line is important
         item.current.removeEventListener('dragend', handleDragEnd)
-        
+        setDragging(false)
 
     }
 
@@ -262,6 +265,17 @@ const PdfCreate = () => {
     }
 
 
+function getDraggingStyle(index){
+    if(index===dragStartIndex.current)
+    {
+
+        return "file-item dragging"
+    }
+
+    else{return "file-item"}
+
+}
+
     return (
         <div className="app-container">
             <div className="input-container">
@@ -284,9 +298,10 @@ const PdfCreate = () => {
                     {/* iterating array of files */}
                     <div className="file-list">
                         {fileList ? fileList.map((list, index) => (
+                           
                             <div
                                 key={list.name}
-                                className='file-item'
+                                className={dragging ? getDraggingStyle(index) : "file-item"}
                                 draggable
                                 onDragStart={(e) => handleDragStart(e, index)}
                                 onDragEnter={(e) => handleDragEnter(e, index)}
@@ -300,6 +315,7 @@ const PdfCreate = () => {
                                 <p className='rotate-pdf' onClick={(e)=>handleRotatePdf(e,index)}><span className="material-symbols-outlined">rotate_90_degrees_ccw</span></p>
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>
+                            
                         )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs/Images</div></label>}
                     </div>
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { PageSizes, PDFDocument, degrees } from 'pdf-lib'
-import pdfImage from './PDF-Placeholder.png'
+// assets from public folder are accessed throuth root directory
+import pdfImage from '/PDF-Placeholder.png'
 
 
 

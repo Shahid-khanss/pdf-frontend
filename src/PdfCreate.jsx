@@ -317,7 +317,7 @@ function getDraggingStyle(index){
                                 <p onClick={(e) => handleDelete(e, index)} className='file-delete'><span className="material-symbols-outlined">delete</span></p>
                             </div>
                             
-                        )) : <label htmlFor="input"><div className='input-placeholder'>Upload Docs/Images</div></label>}
+                        )) : <label htmlFor="input"><div className='input-placeholder'>Upload <br/>PDFs/JPEGs</div></label>}
                     </div>
 
                 </div>
